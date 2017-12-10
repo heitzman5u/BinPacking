@@ -1,22 +1,27 @@
 import java.util.ArrayList;
 
 import algos.Algo;
-import elements.Objet;
 
 public class Main {
 
 	public Main(){
-		Objet obj1 = new Objet(4);
-		Objet obj2 = new Objet(3);
 		
-		ArrayList<Objet>listeObj = new ArrayList<Objet>();
-		listeObj.add(obj1);
-		listeObj.add(obj2);
-		
+		ArrayList<Integer>listeObj = new ArrayList<Integer>();
+		listeObj.add(5);
+		listeObj.add(4);
+		listeObj.add(2);
 		
 		// FRACTIONAL PACKING
+		System.out.println("FractionalPacking");
 		Algo algo = new Algo(Algo.FractionalPacking, listeObj, 8);
 		System.out.println(algo.getResultat());
+		System.out.println("\n");
+		
+		// FRACTIONAL PACKING
+		System.out.println("FirstFitPacking");
+		Algo algo1 = new Algo(Algo.FirstFitPacking, listeObj, 8);
+		System.out.println(algo1.getResultat());
+		System.out.println("\n");
 		
 		//--
 	}
