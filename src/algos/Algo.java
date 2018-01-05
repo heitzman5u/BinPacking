@@ -1,6 +1,7 @@
 package algos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import elements.Sac;
 
@@ -9,6 +10,8 @@ public class Algo {
 	public static final int FractionalPacking = 0;
 	public static final int FirstFitPacking = 1;
 	public static final int BestFitPacking = 2;
+	public static final int FirstFitDecreasingPacking = 3;
+	public static final int BestFitDecreasingPacking = 4;
 	
 	private int tailleSac;
 	private ArrayList<Integer> listeObj;
@@ -26,6 +29,12 @@ public class Algo {
 		}
 		if (algo == BestFitPacking){
 			resultat = bestFitPacking();
+		}
+		if (algo == FirstFitDecreasingPacking){
+			resultat = firstFitDecreasingPacking();
+		}
+		if (algo == BestFitDecreasingPacking){
+			resultat = bestFitDecreasingPacking();
 		}
 	}
 	
@@ -54,7 +63,7 @@ public class Algo {
 		for(int cptObj = 0 ; cptObj < listeObj.size() ; cptObj ++){
 			if (listeObj.get(cptObj) <= tailleSac){
 				
-				// Si on a des objets dans notre liste et que nous n'avons pas encore de sac, on en créé un.
+				// Si on a des objets dans notre liste et que nous n'avons pas encore de sac, on en cré³¬ un.
 				if(listeSacs.size() == 0){
 					Sac sac = new Sac(tailleSac);
 					listeSacs.add(sac);
@@ -72,7 +81,7 @@ public class Algo {
 					}
 				}
 				
-				// si l'obj ne rentre dans aucun sac existant, on créer un nouveau sac et on le met dedans.
+				// si l'obj ne rentre dans aucun sac existant, on cré¦¥r un nouveau sac et on le met dedans.
 				if (sacTrouve == false){
 					Sac sac = new Sac(tailleSac);
 					sac.ajouterObj(listeObj.get(cptObj));
@@ -83,11 +92,6 @@ public class Algo {
 				return -1;
 			}
 		}	
-		
-		for (int i = 0 ; i < listeSacs.size() ; i++){
-			System.out.println("sac " + i + " : "+ listeSacs.get(i).getTailleOccupee());
-		}	
-		
 		return listeSacs.size();	
 	}
 
@@ -103,13 +107,13 @@ public class Algo {
 		for(int cptObj = 0 ; cptObj < listeObj.size() ; cptObj ++){
 			if (listeObj.get(cptObj) <= tailleSac){
 				
-				// Si on a des objets dans notre liste et que nous n'avons pas encore de sac, on en créé un.
+				// Si on a des objets dans notre liste et que nous n'avons pas encore de sac, on en cré³¬ un.
 				if(listeSacs.size() == 0){
 					Sac sac = new Sac(tailleSac);
 					listeSacs.add(sac);
 				}
 				
-				// on recherche le 1er sac existant dont la capacité, apres l'ajout du sac, sera la plus grande.
+				// on recherche le 1er sac existant dont la capacitï¿½, apres l'ajout du sac, sera la plus grande.
 				boolean sacTrouve = false;
 				int maxCapaDispoSac = -1;
 				Sac sacMaxCapa = null;
@@ -118,7 +122,7 @@ public class Algo {
 					int capaDispoSac = listeSacs.get(i).getCapaciteMax() - listeSacs.get(i).getTailleOccupee();
 					
 					if (capaDispoSac >= listeObj.get(cptObj)){ //si l'obj rentre dans le sac alors ...
-						if(capaDispoSac - listeObj.get(cptObj) > maxCapaDispoSac ){ // je regarde si la capacité apres ajout est la plus gande parmis tous les sacs
+						if(capaDispoSac - listeObj.get(cptObj) > maxCapaDispoSac ){ // je regarde si la capacitï¿½ apres ajout est la plus gande parmis tous les sacs
 							
 							maxCapaDispoSac = capaDispoSac - listeObj.get(cptObj);
 							sacMaxCapa = listeSacs.get(i); 
@@ -132,7 +136,7 @@ public class Algo {
 					sacTrouve = true;
 				}
 				
-				// si l'obj ne rentre dans aucun sac existant, on créer un nouveau sac et on le met dedans.
+				// si l'obj ne rentre dans aucun sac existant, on cré¦¥r un nouveau sac et on le met dedans.
 				if (sacTrouve == false){
 					Sac sac = new Sac(tailleSac);
 					sac.ajouterObj(listeObj.get(cptObj));
@@ -144,15 +148,21 @@ public class Algo {
 				return -1;
 			}
 		}
-		
-		for (int i = 0 ; i < listeSacs.size() ; i++){
-			System.out.println("sac " + i + " : "+ listeSacs.get(i).getTailleOccupee());
-		}	
-		
 		return listeSacs.size();
 	}
 	
-
+	public int firstFitDecreasingPacking() {
+		Collections.sort(listeObj, Collections.reverseOrder());
+		return firstFitPacking();
+	}
+	
+	public int bestFitDecreasingPacking() {
+		Collections.sort(listeObj, Collections.reverseOrder());
+		return bestFitPacking();
+	}
+	
+	
+	
 	public int getResultat() {
 		return resultat;
 	}
